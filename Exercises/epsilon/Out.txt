@@ -1,0 +1,27 @@
+
+Task 1:
+my max int = 2147483647
+int.MaxValue = 2147483647
+my min int = -2147483648
+int.MinValue = -2147483648
+
+Task 2: 
+machine Epsilon double = 2.22044604925031E-16
+machine epsilon float = 1.192093E-07
+
+doble epsilon should be about 2.22044604925031E-16
+float epsilon should be about 1.19209289550781E-07
+Checks out
+
+Task 3:
+1, 1
+a==b ? False
+a>1  ? False
+b>1  ? True
+This happens because c# first adds the two first elements together, which for b is tiny + tiny = epsilon and then adds 1 => b=1+epsilon, whereas a+tiny =1 and then 1+ tiny=a=1
+ 
+Task 4:
+d1=7.999999999999999e-001
+d2=8.000000000000000e-001
+d1==d2 ? => False
+are d1 and d2 equal? We check using approx, approx(a,b) = True

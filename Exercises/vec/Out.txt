@@ -1,0 +1,18 @@
+Task 1: 
+
+vector u = (3, 3, 3)
+vector v = (2, 2, 2)
+
+Task 2:
+testing /: dividing u by 3: u/3 = (1, 1, 1)
+testing +: u + v = (5, 5, 5)
+testing -: u - v = (1, 1, 1)
+
+Task 3:
+u.dot(v) = 18
+vec.dot(u,v) = 18
+Are u and v equal according to our approx method? u.approx(v) = False
+What if u = (2,2,2)? u.approx(v) = True
+
+Task 4: 
+Testing our overwritten ToString() method: u.ToString() = 2 2 2
