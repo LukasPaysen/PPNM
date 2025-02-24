@@ -1,0 +1,35 @@
+
+Task 1:
+Harmonic sum (1000000000 terms) with 1 threads: 21.3004815023485
+real 3.03
+user 2.89
+sys 0.01
+Harmonic sum (1000000000 terms) with 2 threads: 21.3004815023488
+real 8.42
+user 16.62
+sys 0.00
+Harmonic sum (1000000000 terms) with 3 threads: 21.3004815023489
+real 5.57
+user 13.53
+sys 0.04
+Harmonic sum (1000000000 terms) with 4 threads: 21.300481502349
+real 4.12
+user 9.55
+sys 0.00
+
+Task 2:
+Serial sum (1000000000 terms): 21.3004815023485
+real 3.01
+user 2.95
+sys 0.01
+Parallel sum (1000000000): 14.1116815513422
+real 9.76
+user 105.94
+sys 0.01
+When you use too many threads for a small task, the time taken to manage these threads outweighs the parallelization benefit.
+Incorrect result is due to race conditions.
+Total sum using ThreadLocal: 21.3004815023479
+real 1.95
+user 20.61
+sys 0.02
+The use of ThreadLocal<T> gives the correct result but is slower due to the overhead of managing multiple threads, context switching, and synchronization
