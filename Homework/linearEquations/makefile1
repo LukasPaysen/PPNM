@@ -1,0 +1,21 @@
+default: hello timing
+
+hello: main.exe
+	mono main.exe hello > Out.txt
+
+timing: main.exe
+	>times.data
+	for N in $$(seq 100 20 700); do \
+		time --format "$$N %e" --output times.data --append mono main.exe -time -size:$$N; \
+	done
+
+main.exe: main.cs
+	mcs -target:exe -out:main.exe main.cs
+
+N-plot.svg: times.data
+	gnuplot plot.gpi
+
+clean:
+	rm -f Out.txt main.exe times.data N-plot.svg
+
+.PHONY: default hello timing clean

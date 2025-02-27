@@ -1,0 +1,20 @@
+set terminal svg
+set output "N-plot.svg"
+set title "QR Factorization Timing"
+set xlabel "Matrix Size N"
+set ylabel "Time (seconds)"
+set grid
+
+f(x) = a * x**3
+
+a = 1e-9
+
+fit f(x) 'times.data' using 1:2 via a
+
+
+
+plot "times.data" using 1:2 with linespoints title "QR Factorization Time", \
+	f(x) with lines title sprintf("Fit ax^3: a=%.3g", a) 
+
+
+
