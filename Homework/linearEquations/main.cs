@@ -259,7 +259,7 @@ namespace QRDecompositionExample
                 for (int j = 0; j < i; j++)
                     if (Math.Abs(qrTall.R[i, j]) > 1e-9)
                         isUpper = false;
-            Console.WriteLine("R is upper triangular: " + isUpper);
+            Console.WriteLine("R is upper triangular: " + isUpper );
 
 
             // Check that Qᵀ*Q = I
@@ -297,7 +297,7 @@ namespace QRDecompositionExample
             Console.WriteLine(testA);
 
 
-            
+            matrix testAMinA = new matrix(n,m);
             
 
             // Check that Q*R equals A.
@@ -313,10 +313,15 @@ namespace QRDecompositionExample
             bool aMatches = true;
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < m; j++)
+                    {
+                    testAMinA[i,j] = Math.Abs(A[i, j] - A_reconstructed[i, j]);
                     if (Math.Abs(A[i, j] - A_reconstructed[i, j]) > 1e-9)
+                        
                         aMatches = false;
-            Console.WriteLine("Q * R equals A: " + aMatches);
+                    }
+            Console.WriteLine("Q * R - A = \n" + testAMinA);
 
+            Console.WriteLine("Q * R equals A: " + aMatches);
             // ======================================================
             // Test 2: Solving a linear system using QR decomposition
             // ======================================================

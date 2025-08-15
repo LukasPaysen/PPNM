@@ -37,6 +37,13 @@ Q*R:
 0.772	0.101	0.990	
 0.658	0.642	0.682	
 
+Q * R - A = 
+0.000	0.000	0.000	
+0.000	0.000	0.000	
+0.000	0.000	0.000	
+0.000	0.000	0.000	
+0.000	0.000	0.000	
+
 Q * R equals A: True
 
 Testing solving linear system with square matrix A:

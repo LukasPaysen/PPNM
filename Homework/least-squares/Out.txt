@@ -1,0 +1,27 @@
+Task A:
+Fit results (ln(y) = c0 - c1 * t):
+c0 = 4.958665
+c1 = 0.170624
+
+Derived (original) parameters:
+a = exp(c0) = 142.403541
+lambda = 0.170624 
+T1/2 = ln(2)/lambda = 4.062424 days
+The modern value for 224-Ra is 3.63 days while we find it to be 4.06 days. This turns out to be a difference of 11.9 %
+To see the plot with the experimental data, error bars, and the best fit, open the file thx_ln_plot.png.
+
+Task b:
+We modify the lsfit function to also calculate the covariant matrix and the uncertainties of the fitting coefficients. The uncertainties are simply the square roots of the diagonal elements of the covariant matrix. We get:
+c0 = 4.9587 ± 0.0354
+c1 = 0.1706 ± 0.0072
+We want to also estimate the uncertainty of the half-life of ThX. We do that by error-propagation as the error of the half-life T_½ comes from the error in lambda, sigma_lambda, by the formula: 
+ sigma_T_½ = |d T_½ / d lambda|*sigma_lambda = |-ln(2)/lambda^2|*sigma_lambda
+This gives: 
+ sigma_T_½ = 0.1704 days 
+But since our half-life minus the uncertainty is still larger than the modern value: 
+ 4.0624 - 0.1704 days = 3.89203017004467 > 3.63 days 
+it does not agree with the modern value
+
+Task C: 
+We plot the the best fit function along with four more graphs where we change the coeffiecients by the uncertainties we calculated in task B. 
+See the result in the file thx_ln_unc_plot.png (+/+ means both coefficients are modified by adding their uncertainties to them and so on)

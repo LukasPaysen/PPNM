@@ -1,12 +1,9 @@
 default: Out.txt
-	cat Out.txt
+	cat $<
 Out.txt : main.exe              # Out.txt depends on hello.exe
-	@echo "Running main.exe... please wait, this might take a couple of minutes."
-	#mono main.exe > Out.txt # run hello.exea, send output to Out.txt
-	mono main.exe -rmax 10 -dr 0.3 > Out.txt
-	gnuplot plot_eps0_vs_dr.gp
-	gnuplot plot_eps0_vs_rmax.gp
-	gnuplot plot_wave_functions.gp
+	mono main.exe > Out.txt # run hello.exe, send output to Out.txt
+	gnuplot plot_ln.gp
+	gnuplot plot_ln_unc.gp
 main.exe : main.cs             # hello.exe depends on hello.cs
 	mcs -target:exe -out:main.exe main.cs # compile hello.cs, save bytecode in hello.exe
 clean:                           # a phoney target, no dependencies
