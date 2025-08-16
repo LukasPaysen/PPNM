@@ -1,0 +1,42 @@
+Task A:
+
+Table (x_i, y_i = cos(x_i)):
+    0             1
+    1      0.540302
+    2     -0.416147
+    3     -0.989992
+    4     -0.653644
+    5      0.283662
+    6       0.96017
+    7      0.753902
+    8       -0.1455
+    9      -0.91113
+
+Sample evaluations of linterp and linterpInteg (from 0):
+   z       linterp(z)     linterpInteg(z)    true integral sin(z)
+ 0.000              1                0              0
+ 0.500     0.77015115       0.44253779     0.47942554
+ 1.000     0.54030231       0.77015115     0.84147098
+ 2.300    -0.58830053       0.68156178     0.74570521
+ 4.700   0.0024704436      -0.92056945    -0.99992326
+ 8.900    -0.83456724       0.46447379     0.50102086
+ 9.000    -0.91113026       0.37718891     0.41211849
+
+To see the plots of the linear interpolation and its antiderivative along with the true values for cos(x) open the file spline.png
+
+Task B: Quadratic spline for y = sin(x)
+
+qspline coefficients for sin nodes:
+b: 0.841471 0.841471 -0.705818 -0.830537 -0.965308 0.561065 0.797953 1.07485 -0.410108
+c: 0 -0.773645 -0.0623593 -0.0673858 0.763186 0.118444 0.138449 -0.74248 -0.167132
+See the quadratic spline plots in the file qspline.png.
+
+Task C: Cubic spline for y = sin(x)
+   z      cubicS(z)    cubicIntegral(z)   trueIntegral
+ 0.000             0                0                0
+ 0.500    0.47783759       0.12183865       0.12241744
+ 2.000    0.90929743        1.4133947        1.4161468
+ 4.300   -0.91377252        1.3979348        1.4007992
+ 8.900    0.48954535        1.8515622        1.8654352
+ 9.000    0.41211849        1.8966504        1.9111303
+In the file cubic1.png we see that we can't distinguish between the cubic integral and the true integral for sin and that our cubic spline graph and the graph for the built-in cspline from gnuplot are also indistiguishable, so it seems that gnuplot indeed produces a similar cubic spline to our implementation.
