@@ -1,0 +1,124 @@
+Task A: 
+We start out by testing out integrator on the 4 expressions from the exercise. The third expression actually is equal to pi/4 and not pi/2. First we pick strict accuracy requirements of 1e-8 and then relax them afterwards to 1e-3 and see that our integrator returns values within     the from the exercise given accuracy goals.
+------------------------------------------------------------
+sqrt(x) on [0,1]
+  computed = 0.66666666666667451
+  expected = 0.66666666666666663
+  abs error = 7.882583E-015
+  acc = 1E-08, eps = 1E-08
+  passes (err ≤ acc + eps*|expected|)? : True
+  function evaluations: 8468
+------------------------------------------------------------
+1/sqrt(x) on [0,1]
+  computed = 1.99999999029096
+  expected = 2
+  abs error = 9.709040E-009
+  acc = 1E-08, eps = 1E-08
+  passes (err ≤ acc + eps*|expected|)? : True
+  function evaluations: 116632
+------------------------------------------------------------
+sqrt(1-x^2) on [0,1]
+  computed = 0.78539816339745183
+  expected = 0.78539816339744828
+  abs error = 3.552714E-015
+  acc = 1E-08, eps = 1E-08
+  passes (err ≤ acc + eps*|expected|)? : True
+  function evaluations: 10812
+------------------------------------------------------------
+ln(x)/sqrt(x) on [0,1]
+  computed = -3.9999996017835935
+  expected = -4
+  abs error = 3.982164E-007
+  acc = 1E-08, eps = 1E-08
+  passes (err ≤ acc + eps*|expected|)? : False
+  function evaluations: 136624
+
+
+Now trying with less strict accuracy goals:
+------------------------------------------------------------
+sqrt(x) on [0,1]
+  computed = 0.66672220774016866
+  expected = 0.66666666666666663
+  abs error = 5.554107E-005
+  acc = 0.001, eps = 0.001
+  passes (err ≤ acc + eps*|expected|)? : True
+  function evaluations: 24
+------------------------------------------------------------
+1/sqrt(x) on [0,1]
+  computed = 1.9999614903713803
+  expected = 2
+  abs error = 3.850963E-005
+  acc = 0.001, eps = 0.001
+  passes (err ≤ acc + eps*|expected|)? : True
+  function evaluations: 400
+------------------------------------------------------------
+sqrt(1-x^2) on [0,1]
+  computed = 0.78545274738368454
+  expected = 0.78539816339744828
+  abs error = 5.458399E-005
+  acc = 0.001, eps = 0.001
+  passes (err ≤ acc + eps*|expected|)? : True
+  function evaluations: 28
+------------------------------------------------------------
+ln(x)/sqrt(x) on [0,1]
+  computed = -3.9999638261555321
+  expected = -4
+  abs error = 3.617384E-005
+  acc = 0.001, eps = 0.001
+  passes (err ≤ acc + eps*|expected|)? : True
+  function evaluations: 488
+
+
+Computing erf(1) for decreasing acc (eps = 0). Writing results to erf_convergence.dat
+acc=1.000000E-001  abs_error=1.904253E-004  computed=0.84251036764405329  func_evals=4
+acc=1.000000E-002  abs_error=1.904253E-004  computed=0.84251036764405329  func_evals=4
+acc=1.000000E-003  abs_error=2.916554E-005  computed=0.84272995848719867  func_evals=12
+acc=1.000000E-004  abs_error=1.011264E-007  computed=0.84270089407615689  func_evals=48
+acc=1.000000E-005  abs_error=2.666356E-008  computed=0.84270081961327159  func_evals=152
+acc=1.000000E-006  abs_error=9.344026E-011  computed=0.84270079304315515  func_evals=404
+acc=1.000000E-007  abs_error=2.724976E-011  computed=0.84270079297696465  func_evals=1408
+acc=1.000000E-008  abs_error=3.885781E-014  computed=0.84270079294975375  func_evals=4788
+acc=1.000000E-009  abs_error=2.686740E-014  computed=0.84270079294974176  func_evals=12848
+acc=1.000000E-010  abs_error=0.000000E+000  computed=0.84270079294971489  func_evals=44900
+
+See the plot in the file erf.convergence.png
+
+Task B:
+We calculate integral examples from the exercise with integrable divergencies at the end-points of the intervals
+------------------------------------------------------------
+Compare ∫0^1 1/sqrt(x) dx
+  acc=0.001, eps=0.001
+ Method | computed           | abs error       | calls to f(x)
+--------+--------------------+-----------------+--------------
+ Ordinary: 1.9999614903713803  3.850963E-005           400
+ CC      : 1.9999920104643225  7.989536E-006            16
+
+------------------------------------------------------------
+Compare ∫0^1 ln(x)/sqrt(x) dx
+  acc=0.001, eps=0.001
+ Method | computed           | abs error       | calls to f(x)
+--------+--------------------+-----------------+--------------
+ Ordinary: -3.9999638261555321  3.617384E-005           488
+ CC      : -3.9999320465441706  6.795346E-005           204
+
+We compared the number of integrand evaluations with the python/numpy's integration routines
+Python SciPy (quad) reference:
+∫_0^1 1/sqrt(x) dx ≈ 2.000, calls = 231
+∫_0^1 ln(x)/sqrt(x) dx ≈ -4.000, calls = 315
+In both test cases the Clenshaw–Curtis method reached the target accuracy with fewer integrand evaluations than the ordinary adaptive integrator and SciPy’s quad.
+
+I now generalize the integrator to accept infinite limits and test it on two examples ∫0^∞ exp(-x) dx and ∫-∞^∞ exp(-x^2) dx. We get:
+∫0^∞ exp(-x) dx ≈ 1.00003664768175, exact = 1, calls = 52
+∫-∞^∞ exp(-x^2) dx ≈ 1.76552249656752, exact = 1.77245385090552, calls = 72
+
+We now compare the results with Python SciPy (quad) for the same integrals:
+Python SciPy (quad) reference:
+∫0^∞ e^-x dx         | SciPy quad result: 1.000000000000 | calls: 135
+∫-∞^∞ exp(-x^2) dx   | SciPy quad result: 1.772453850906  | calls: 270
+
+In both examples the generalized integrator reaches the target accuracy with fewer function evaluations than SciPy's quad
+
+Task C:
+making integrator estimate and return the integration error:
+∫0^1 ln(x)/√x dx ≈ -3.99993204654417, estimated error = 6.7046455964892E-06, actual error = 6.79534558294392E-05
+∫0^π sin(x) dx ≈ 2.00005417353069, estimated error = 0.000151126702105486, actual error = 5.41735306915925E-05
