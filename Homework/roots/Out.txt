@@ -1,0 +1,151 @@
+Task A:
+We start by debugging our root-finding routine using the simple one- and two-dimensional equations f(x) = x^2 - 2 and 2D test: f(x,y) = [x^2 + y - 2,  x + y^2 - 2
+1D test: f(x) = x^2 - 2
+iter   1: ||f|| = 2.500000E-001, lambda = 1.000E+000, ||Dx|| = 5.000000E-001
+iter   2: ||f|| = 6.944444E-003, lambda = 1.000E+000, ||Dx|| = 8.333333E-002
+iter   3: ||f|| = 6.007329E-006, lambda = 1.000E+000, ||Dx|| = 2.450980E-003
+iter   4: ||f|| = 4.500844E-012, lambda = 1.000E+000, ||Dx|| = 2.123908E-006
+[newton] converged: ||f|| = 4.500844E-012 in 4 iterations
+--- 1D result ---
+x = (1.41421)
+||f(x)|| = 4.500844E-012
+
+2D test: f(x,y) = [x^2 + y - 2,  x + y^2 - 2]
+iter   1: ||f|| = 9.050967E-001, lambda = 1.000E+000, ||Dx|| = 1.131371E+000
+iter   2: ||f|| = 5.010917E-002, lambda = 1.000E+000, ||Dx|| = 2.662049E-001
+iter   3: ||f|| = 1.942191E-004, lambda = 1.000E+000, ||Dx|| = 1.657307E-002
+iter   4: ||f|| = 2.965772E-009, lambda = 1.000E+000, ||Dx|| = 6.473771E-005
+[newton] step smaller than dx at iter 4. ||f|| = 2.965772E-009
+--- 2D nonlinear result ---
+x = (1, 1)
+||f(x)|| = 2.965772E-009
+
+
+Now trying to find the extremums of the Rosenbrock valley function, which according to the linked wikipedia article is only at (1,1):
+
+Rosenbrock: find stationary point of F(x,y) by solving grad F = 0
+iter   1: ||f|| = 1.996247E-001, lambda = 1.000E+000, ||Dx|| = 1.005288E-001
+iter   2: ||f|| = 1.974847E-001, lambda = 1.563E-002, ||Dx|| = 2.295104E-001
+iter   3: ||f|| = 1.953468E-001, lambda = 1.563E-002, ||Dx|| = 2.255953E-001
+iter   4: ||f|| = 1.932120E-001, lambda = 1.563E-002, ||Dx|| = 2.217566E-001
+iter   5: ||f|| = 1.910813E-001, lambda = 1.563E-002, ||Dx|| = 2.179924E-001
+iter   6: ||f|| = 1.889556E-001, lambda = 1.563E-002, ||Dx|| = 2.143007E-001
+iter   7: ||f|| = 1.868357E-001, lambda = 1.563E-002, ||Dx|| = 2.106798E-001
+iter   8: ||f|| = 1.847224E-001, lambda = 1.563E-002, ||Dx|| = 2.071279E-001
+iter   9: ||f|| = 1.826166E-001, lambda = 1.563E-002, ||Dx|| = 2.036435E-001
+iter  10: ||f|| = 1.805189E-001, lambda = 1.563E-002, ||Dx|| = 2.002247E-001
+iter  11: ||f|| = 1.784300E-001, lambda = 1.563E-002, ||Dx|| = 1.968702E-001
+iter  12: ||f|| = 1.763506E-001, lambda = 1.563E-002, ||Dx|| = 1.935783E-001
+iter  13: ||f|| = 1.735839E-001, lambda = 3.125E-002, ||Dx|| = 1.903476E-001
+iter  14: ||f|| = 1.707320E-001, lambda = 3.125E-002, ||Dx|| = 1.838960E-001
+iter  15: ||f|| = 1.678086E-001, lambda = 3.125E-002, ||Dx|| = 1.776990E-001
+iter  16: ||f|| = 1.648264E-001, lambda = 3.125E-002, ||Dx|| = 1.717432E-001
+iter  17: ||f|| = 1.617968E-001, lambda = 3.125E-002, ||Dx|| = 1.660161E-001
+iter  18: ||f|| = 1.587304E-001, lambda = 3.125E-002, ||Dx|| = 1.605060E-001
+iter  19: ||f|| = 1.556366E-001, lambda = 3.125E-002, ||Dx|| = 1.552022E-001
+iter  20: ||f|| = 1.525242E-001, lambda = 3.125E-002, ||Dx|| = 1.500948E-001
+iter  21: ||f|| = 1.494010E-001, lambda = 3.125E-002, ||Dx|| = 1.451744E-001
+iter  22: ||f|| = 1.462743E-001, lambda = 3.125E-002, ||Dx|| = 1.404324E-001
+iter  23: ||f|| = 1.431505E-001, lambda = 3.125E-002, ||Dx|| = 1.358605E-001
+iter  24: ||f|| = 1.400354E-001, lambda = 3.125E-002, ||Dx|| = 1.314514E-001
+iter  25: ||f|| = 1.369344E-001, lambda = 3.125E-002, ||Dx|| = 1.271977E-001
+iter  26: ||f|| = 1.338521E-001, lambda = 3.125E-002, ||Dx|| = 1.230929E-001
+iter  27: ||f|| = 1.307930E-001, lambda = 3.125E-002, ||Dx|| = 1.191307E-001
+iter  28: ||f|| = 1.277607E-001, lambda = 3.125E-002, ||Dx|| = 1.153050E-001
+iter  29: ||f|| = 1.237384E-001, lambda = 6.250E-002, ||Dx|| = 1.116104E-001
+iter  30: ||f|| = 1.194918E-001, lambda = 6.250E-002, ||Dx|| = 1.043838E-001
+iter  31: ||f|| = 1.150929E-001, lambda = 6.250E-002, ||Dx|| = 9.767188E-002
+iter  32: ||f|| = 1.106021E-001, lambda = 6.250E-002, ||Dx|| = 9.142887E-002
+iter  33: ||f|| = 1.060695E-001, lambda = 6.250E-002, ||Dx|| = 8.561455E-002
+iter  34: ||f|| = 1.015365E-001, lambda = 6.250E-002, ||Dx|| = 8.019353E-002
+iter  35: ||f|| = 9.703740E-002, lambda = 6.250E-002, ||Dx|| = 7.513442E-002
+iter  36: ||f|| = 9.259982E-002, lambda = 6.250E-002, ||Dx|| = 7.040921E-002
+iter  37: ||f|| = 8.676274E-002, lambda = 1.250E-001, ||Dx|| = 6.599275E-002
+iter  38: ||f|| = 8.033424E-002, lambda = 1.250E-001, ||Dx|| = 5.766098E-002
+iter  39: ||f|| = 7.369457E-002, lambda = 1.250E-001, ||Dx|| = 5.043804E-002
+iter  40: ||f|| = 6.710414E-002, lambda = 1.250E-001, ||Dx|| = 4.415363E-002
+iter  41: ||f|| = 5.841602E-002, lambda = 2.500E-001, ||Dx|| = 3.867160E-002
+iter  42: ||f|| = 4.842425E-002, lambda = 2.500E-001, ||Dx|| = 2.903617E-002
+iter  43: ||f|| = 3.476278E-002, lambda = 5.000E-001, ||Dx|| = 2.185514E-002
+iter  44: ||f|| = 1.099312E-002, lambda = 1.000E+000, ||Dx|| = 1.102842E-002
+iter  45: ||f|| = 1.901113E-006, lambda = 1.000E+000, ||Dx|| = 1.037968E-004
+iter  46: ||f|| = 3.789888E-011, lambda = 1.000E+000, ||Dx|| = 6.069159E-007
+[newton] converged: ||f|| = 3.789888E-011 in 46 iterations
+--- Rosenbrock result ---
+x = (1, 1)
+||f(x)|| = 3.789888E-011
+scalar f(x) = 4.418752295776E-024
+
+Himmelblau: find minima by solving grad = 0 from different starts. Here there should be four local minima and one local maximum according to Wiki:
+
+Himmelblau start #1: (3, 2)
+[newton] converged: ||f|| = 0.000000E+000 in 0 iterations
+--- Himmelblau result #1 ---
+x = (3, 2)
+||f(x)|| = 0.000000E+000
+scalar f(x) = 0.000000000000E+000
+
+
+Himmelblau start #2: (-2, 3)
+iter   1: ||f|| = 7.703076E+000, lambda = 5.000E-001, ||Dx|| = 1.835383E+000
+iter   2: ||f|| = 3.480040E-001, lambda = 1.000E+000, ||Dx|| = 1.054842E-001
+iter   3: ||f|| = 9.503943E-004, lambda = 1.000E+000, ||Dx|| = 5.328465E-003
+iter   4: ||f|| = 7.248620E-009, lambda = 1.000E+000, ||Dx|| = 1.465668E-005
+[newton] converged: ||f|| = 7.248620E-009 in 4 iterations
+--- Himmelblau result #2 ---
+x = (-2.80512, 3.13131)
+||f(x)|| = 7.248620E-009
+scalar f(x) = 4.051097782366E-019
+
+
+Himmelblau start #3: (-3, -3)
+iter   1: ||f|| = 1.386659E+001, lambda = 5.000E-001, ||Dx|| = 1.364947E+000
+iter   2: ||f|| = 9.196621E-001, lambda = 1.000E+000, ||Dx|| = 1.558881E-001
+iter   3: ||f|| = 3.241066E-003, lambda = 1.000E+000, ||Dx|| = 9.156967E-003
+iter   4: ||f|| = 4.078128E-008, lambda = 1.000E+000, ||Dx|| = 3.259200E-005
+[newton] step smaller than dx at iter 4. ||f|| = 4.078128E-008
+--- Himmelblau result #3 ---
+x = (-3.77931, -3.28319)
+||f(x)|| = 4.078128E-008
+scalar f(x) = 7.969687296276E-018
+
+
+Himmelblau start #4: (3, -2)
+iter   1: ||f|| = 1.795909E+001, lambda = 5.000E-001, ||Dx|| = 8.297317E-001
+iter   2: ||f|| = 1.588456E+000, lambda = 1.000E+000, ||Dx|| = 2.062536E-001
+iter   3: ||f|| = 9.797156E-003, lambda = 1.000E+000, ||Dx|| = 1.571217E-002
+iter   4: ||f|| = 3.816214E-007, lambda = 1.000E+000, ||Dx|| = 9.873798E-005
+[newton] step smaller than dx at iter 4. ||f|| = 3.816214E-007
+--- Himmelblau result #4 ---
+x = (3.58443, -1.84813)
+||f(x)|| = 3.816214E-007
+scalar f(x) = 7.126908049027E-016
+
+
+Himmelblau start #5: (0, 0)
+iter   1: ||f|| = 2.639859E+000, lambda = 1.000E+000, ||Dx|| = 9.094435E-001
+iter   2: ||f|| = 6.976057E-002, lambda = 1.000E+000, ||Dx|| = 9.614565E-002
+iter   3: ||f|| = 1.676310E-004, lambda = 1.000E+000, ||Dx|| = 3.877842E-003
+iter   4: ||f|| = 1.243553E-009, lambda = 1.000E+000, ||Dx|| = 1.043119E-005
+[newton] converged: ||f|| = 1.243553E-009 in 4 iterations
+--- Himmelblau result #5 ---
+x = (-0.270845, -0.923039)
+||f(x)|| = 1.243553E-009
+scalar f(x) = 1.816165215226E+002
+
+We have found all the local minima that match the wiki article linked (It said minima at approximately (3,2), (-2.8,3.1), (-3.8, -3.3), (3.6, -1.8) and maxima at (-0.3,-0.9))
+We can tease out whether an extremum was min or max from the 'scalar f(x)' value in this case.
+For both Rosenbrock's valley function and Himmelblau's function we found the extrema by first calculating the partial derivatives analytically and then searching for their roots.
+
+Task B: Hydrogen s-wave shooting (shooting + bisection).
+Scanning for brackets in E in [-1.5, -0.01] ...
+Bracket found: [-5.166000000000E-001, -4.868000000000E-001]
+Found root E0 = -4.999751003657E-001 (exact -0.5)
+Wavefunction written to wavefunc.dat. 
+See plot of the wavefunction in the file wavefunc.png
+Convergence data (varying rmin) written to conv_rmin.dat
+See the plot in the file conv_rmax.png
+Convergence data (varying rmax) written to conv_rmax.dat
+Plot can be seen in the file conv_rmax.png
+Convergence data (varying tolerances) written to conv_tol.dat.
+Plot in conv_tol.png.
