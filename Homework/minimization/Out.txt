@@ -1,0 +1,50 @@
+
+Task A:
+Finding a minimum of Himmelblau's and Rosensbrock's valley function whilst also recording the number of steps it takes our algorithm to reach the minimum
+
+Rosenbrock start:
+x0 = (-1.2, 2)
+f(x0) = 36.2
+Rosenbrock result:
+x = (0.999991, 0.999982)
+f(x) = 8.07508E-11
+iterations = 25
+
+Himmelblau start:
+x0 = (0, 0)
+f(x0) = 170
+Himmelblau result:
+x = (3, 2)
+f(x) = 2.63099E-14
+iterations = 7
+
+
+Task B: 
+Creating a plot of the data points along with the fit by the Breit-Wigner function.
+Best fit: m=125.972186710209, Γ=2.08633072455643, A=9.876215183306, iterations=14
+See the plot in the file higgs.png
+
+
+Task C:
+Comparing central and forward finite difference approximation. 
+We do the exactly the same example as in task A and see if there is difference in the number of iterations.
+
+Rosenbrock start:
+x0 = (-1.2, 2)
+f(x0) = 36.2
+
+Rosenbrock result central differences:
+x = (1, 1)
+f(x) = 3.28448E-23
+Rosenbrock: forward iters=25, central iters=23
+So central differences got a slightly more precise result using two fewer iterations.
+
+Himmelblau start:
+x0 = (0, 0)
+f(x0) = 170
+
+Himmelblau result central differences:
+x = (3, 2)
+f(x) = 6.25631E-19
+Rosenbrock: forward iters=7, central iters=7
+So central differences got a slightly more precise result but with the same amount of iterations for Himmelblau.
