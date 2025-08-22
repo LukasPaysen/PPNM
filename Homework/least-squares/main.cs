@@ -209,15 +209,7 @@
         class Program
         {
 
-        // Put these methods in your Program class (or a new static class).
-
-        // Least-squares using weighted design matrix built from fs.
-        // Expects:
-        //   fs: array of basis functions f_k(x)
-        //   x: vector of x_i (times)
-        //   y: vector of observations (here: ln(y_i))
-        //   dy: vector of uncertainties of y (here: sigma_ln = delta_y / y)
-        // Returns (c, Cov) where c is vector of fitted coefficients and Cov is covariance matrix.
+       
         static (vector, matrix) lsfit(Func<double,double>[] fs, vector x, vector y, vector dy)
         {
             int n = x.size;
@@ -274,8 +266,6 @@
             return T;
         }
 
-            // Example runner for the Rutherford ThX data (computes c0, c1, a, lambda, T1/2)
-            // Call RunThXFit() from Main() to execute.
             static void RunThXFit()
             {
                 // Raw data from the exercise
@@ -397,14 +387,12 @@ using (var sw = new StreamWriter("thx_ln_perturbed.dat", false, System.Text.Enco
 
 
 
-                // where you have the arrays and fitted vector c:
                 string datPath = "thx_ln_data.dat";
     string fitPath = "thx_ln_fit.dat";
 
     // t_arr, y_arr, dy_arr defined earlier in RunThXFit()
     WriteLnDataFile(datPath, t_arr, y_arr, dy_arr);
 
-    // choose t-range and resolution for the smooth fitted line
     double tmin = 0.0;
     double tmax = 16.0; // or Math.Max(t_arr) + 1
     WriteLnFitFile(fitPath, tmin, tmax, 200, c);
@@ -413,12 +401,10 @@ using (var sw = new StreamWriter("thx_ln_perturbed.dat", false, System.Text.Enco
 
             }
 
-    // Writes the experimental data file: t \t ln(y) \t delta_ln(y)
     static void WriteLnDataFile(string path, double[] t_arr, double[] y_arr, double[] dy_arr)
     {
         using (var sw = new StreamWriter(path, false, System.Text.Encoding.UTF8))
         {
-            // header (gnuplot ignores lines starting with #)
             sw.WriteLine("# t\tln(y)\tdelta_ln(y)");
             for (int i = 0; i < t_arr.Length; i++)
             {
@@ -436,8 +422,6 @@ using (var sw = new StreamWriter("thx_ln_perturbed.dat", false, System.Text.Enco
         }
     }
 
-    // Writes a dense fit-line file for plotting the fitted ln(y) curve
-    // c is the fitted coefficient vector c[0]=c0, c[1]=c1 (for ln y = c0 + c1*t)
     static void WriteLnFitFile(string path, double tmin, double tmax, int npts, vector c)
     {
         using (var sw = new StreamWriter(path, false, System.Text.Encoding.UTF8))

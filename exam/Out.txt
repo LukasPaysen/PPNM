@@ -1,0 +1,16 @@
+Exam!
+Task 1: 
+In the first part we simply created the function declip that takes a clipped signal, the limits y_min and y_max as inputs and returns the reconstructed signal
+
+Task 2: 
+Generated 1000 samples; clipped points: 410
+
+In the second part we tested the implementation on the sine wave clipped at -.8 and .8. 
+The result can easily be seen in the file declipping.png
+The true and declipped signal are indistiguishable in the top plot, which suggests that the declip method performs quite well. 
+In the bottom plot (of the errors) the differences are more apparent, although never very large (|error| always below 0.0002)
+
+Task 3:
+Complex test -> N=2000; clipped points: 583
+For task 3 we built a tougher signal — a chirp (rising pitch) with a bit of harmonics, a slow amplitude wobble, and a short burst—then clipped at ±0.7 and ran the same declipper, saving/plotting the results in declipping_complex.png
+We see that the declipper still works well overall—the declipped curve basically sits on top of the true one.The only big miss is ~0.06–0.09 s: that’s a long saturated block with no data, so the method just smooths across it and overshoots the real peak.
