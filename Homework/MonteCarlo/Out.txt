@@ -1,0 +1,53 @@
+Task A: 
+We calculate two-dimensional integrals with our Monte-Carlo routine. We calculate the area of the unit circle and the poly integral ∬_{[0,1]×[0,1]} (x^2 + y^2) dx dy.
+
+Circle N=100: est=3.160000000000, estErr=1.629233E-001, actErr=1.840735E-002
+Circle N=500: est=3.000000000000, estErr=7.745967E-002, actErr=1.415927E-001
+Circle N=1000: est=3.072000000000, estErr=5.339303E-002, actErr=6.959265E-002
+Circle N=5000: est=3.120000000000, estErr=2.343331E-002, actErr=2.159265E-002
+Circle N=10000: est=3.157200000000, estErr=1.631223E-002, actErr=1.560735E-002
+Circle N=50000: est=3.152240000000, estErr=7.310736E-003, actErr=1.064735E-002
+Circle N=100000: est=3.143760000000, estErr=5.188269E-003, actErr=2.167346E-003
+Poly N=100: est=0.623425971990, estErr=3.977875E-002, actErr=4.324069E-002
+Poly N=500: est=0.671422010237, estErr=1.940288E-002, actErr=4.755344E-003
+Poly N=1000: est=0.676517736200, estErr=1.333936E-002, actErr=9.851070E-003
+Poly N=5000: est=0.656464536525, estErr=5.912482E-003, actErr=1.020213E-002
+Poly N=10000: est=0.669024968025, estErr=4.240212E-003, actErr=2.358301E-003
+Poly N=50000: est=0.664364560972, estErr=1.886985E-003, actErr=2.302106E-003
+Poly N=100000: est=0.666313842575, estErr=1.331945E-003, actErr=3.528241E-004
+
+The estimated error and the actual error as functions of the number of sampling points along with 1/sqrt(N) have been plotted in the files circle_errors.png and poly_errors.png for the unit area and the poly integral respectively.
+
+Now we try to calculate the singular integral with our pseudo-random Monte-Carlo routine:
+
+Singular plain N=100: est=1.481719753746, estErr=2.124050E-001, actErr=8.851582E-002
+Singular plain N=1000: est=1.376700567995, estErr=6.827226E-002, actErr=1.650336E-002
+Singular plain N=5000: est=1.446584194257, estErr=9.047154E-002, actErr=5.338026E-002
+Singular plain N=10000: est=1.412289588038, estErr=4.463320E-002, actErr=1.908566E-002
+Singular plain N=50000: est=1.356441275543, estErr=1.160346E-002, actErr=3.676265E-002
+Singular plain N=100000: est=1.580568480812, estErr=1.924978E-001, actErr=1.873646E-001
+
+Task B:
+We now Implement a multidimensional Monte-Carlo integrator that uses low-discrepancy (quasi-random) sequences. 
+
+Quasi-shifted N=100: mean=1.348955909641, stddev=1.370570E-001, actErr=4.424802E-002
+Quasi-shifted N=1000: mean=1.332357408455, stddev=5.671866E-002, actErr=6.084652E-002
+Quasi-shifted N=5000: mean=1.363209515169, stddev=2.437147E-002, actErr=2.999441E-002
+Quasi-shifted N=10000: mean=1.369225667880, stddev=3.738986E-002, actErr=2.397826E-002
+Quasi-shifted N=50000: mean=1.385405326501, stddev=1.831224E-002, actErr=7.798603E-003
+Quasi-shifted N=100000: mean=1.384087297139, stddev=1.060765E-002, actErr=9.116633E-003
+
+We Compare the scaling of the error with our pseudo-random Monte-Carlo integrator in the file singular_compare_rand.png 
+Although the quasi-random method does not clearly outperform the pseudo-random in terms of accuracy, we see that Plain Monte Carlo is very noisy for this singular integral, with large outliers when samples hit spike regions. In contrast, random-shifted Halton QMC produces smoother, more stable estimates with smaller standard deviations across shifts.
+
+Task C: 
+We compare stratified sampling to our original Monte-Carlo routine:
+
+Strata circle N=200: plain actErr=1.384E-001, strata actErr=3.584E-001, strata estErr=3.536E-001
+Strata circle N=500: plain actErr=3.441E-002, strata actErr=5.525E-001, strata estErr=1.127E-001
+Strata circle N=1000: plain actErr=9.841E-002, strata actErr=9.592E-002, strata estErr=7.473E-002
+Strata circle N=5000: plain actErr=1.119E-002, strata actErr=3.277E-002, strata estErr=3.239E-002
+Strata circle N=10000: plain actErr=4.599E-002, strata actErr=7.112E-003, strata estErr=2.608E-002
+Strata circle N=50000: plain actErr=4.873E-003, strata actErr=1.602E-002, strata estErr=6.208E-003
+
+The plot where we compare stratified sampling vs plain MC can be seen in the file strata_circle.png. Here the trend is even more obvious - the plain MC is not necessarily more inaccurate but is more noizy with large outliers.
