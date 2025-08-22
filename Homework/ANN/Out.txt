@@ -1,0 +1,78 @@
+
+Task A:
+In this task we created an ANN based on our minimization routine from a previous exercise and trained it to approximate the function g(x)=cos(5x-1)*exp(x^2)
+
+Hidden neurons: 10
+Training samples: 41
+Iterations: 200
+Final training MSE: 1.35854E-07
+
+ x		g(x)		F_p(x)		error
+------------------------------------------------------------
+    -1	    0.353227	    0.353124	-0.000103241
+  -0.8	    0.149573	    0.149286	-0.000286432
+  -0.6	   -0.456032	   -0.456229	-0.000197032
+  -0.4	   -0.843616	   -0.843724	-0.000108171
+  -0.2	   -0.399829	   -0.399837	-7.71176E-06
+     0	    0.540302	    0.540087	-0.000215661
+   0.2	    0.960789	    0.960504	-0.000285131
+   0.4	    0.460415	    0.460989	 0.000573591
+   0.6	   -0.290336	   -0.289591	 0.000745058
+   0.8	   -0.522016	   -0.521529	 0.000486995
+     1	   -0.240462	    -0.24044	 2.17518E-05
+
+To see the full results, check the plots in the files ann_fit.png and ann_residual.png
+
+Task B: Modifing the previous exercise such that the network, after training, also can return the first and second derivatives and also the anti-derivative of the approximant to the tabulated function.
+    We use F(x) = Σ_i w_i f(z_i),  z_i = (x - a_i)/b_i,  b_i = exp(s_i).
+    Since dz_i/dx = 1/b_i and so on and
+    For the Gaussian wavelet  f(z) = z·exp(-z^2):
+    f'(z)  = (1 - 2 z^2)·exp(-z^2)
+    f''(z) = (4 z^3 - 6 z)·exp(-z^2)
+    A(z)   = ∫ f(z) dz = -1/2 · exp(-z^2)
+    We can use the chain rule to calculate the derivatives and anti-derivatives.
+
+    Therefore (plugging in z_i = (x - a_i)/b_i in the actual method):
+    F'(x)  = Σ_i (w_i / b_i) · (1 - 2z_i^2) · exp(-z_i^2)
+    F''(x) = Σ_i (w_i / b_i^2) · (4z_i^3 - 6z_i) · exp(-z_i^2)
+    ∫_c^x F = -1/2 · Σ_i w_i b_i · [ exp(-z_i(x)^2) - exp(-z_i(c)^2) ]
+
+    Here is a small table where we compare the actual values of the derivatives vs. our approximant's:
+    
+ x		F'(x)		g'(x)		err'		F''(x)		g''(x)		err''
+--------------------------------------------------------------------------------
+    -1	    0.191158	    0.192498	 -0.00133956	    -10.1782	      -10.18	  0.00185902
+  -0.8	    -2.28907	    -2.28885	-0.000223265	    -11.7369	    -11.7457	  0.00881663
+  -0.6	    -3.18652	    -3.18725	 0.000737467	     5.31847	     5.32013	 -0.00166157
+  -0.4	  -0.0733056	  -0.0736201	 0.000314455	      23.202	     23.1998	   0.0022837
+  -0.2	     4.20852	     4.20829	 0.000234603	     14.2159	      14.226	  -0.0100694
+     0	     4.20539	     4.20735	 -0.00196042	    -14.5876	    -14.5882	 0.000564556
+   0.2	   -0.381803	   -0.384316	   0.0025123	    -25.7535	    -25.7876	   0.0340649
+   0.4	    -3.94979	     -3.9536	  0.00381488	    -6.42744	    -6.40011	  -0.0273314
+   0.6	    -2.82483	    -2.82357	 -0.00125469	     15.0269	     15.0337	 -0.00683455
+   0.8	    0.461766	    0.463167	  -0.0014016	     13.9418	     13.9486	 -0.00686677
+     1	     1.87008	     1.87298	 -0.00290206	   -0.035743	  -0.0376144	  0.00187142
+
+ Primitive H(x) = ∫_0^x F(t) dt (ANN only since no simple elementary antiderivative of g):
+  x=   -1  H(x)=0.2343560195
+  x= -0.5  H(x)=0.2053330516
+  x=    0  H(x)=0
+  x=  0.5  H(x)=0.345832826
+  x=    1  H(x)=0.1599797068
+
+Task C:
+Here we use our ANN to approximate a solution to a differential equation. 
+We try it out on the equation y''+y=0 with y(0)=1 and y(0)=0, which actual solution is cos.
+Iterations: 34, final integral of residual ≈ 0.000269359
+ x	Y(x)		cos(x)		err
+     0	           1	           1	           0
+ 0.314	    0.951682	    0.951057	 0.000625183
+ 0.628	    0.809857	    0.809017	 0.000839814
+ 0.942	    0.587888	    0.587785	 0.000102361
+  1.26	    0.308243	    0.309017	 -0.00077358
+  1.57	-0.000883438	 6.12303E-17	-0.000883438
+  1.88	   -0.309013	   -0.309017	 4.11417E-06
+   2.2	   -0.586515	   -0.587785	  0.00127014
+  2.51	    -0.80718	   -0.809017	  0.00183652
+  2.83	   -0.950048	   -0.951057	  0.00100875
+  3.14	    -1.00042	          -1	 -0.00042065
