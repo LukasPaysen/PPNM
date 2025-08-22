@@ -1,7 +1,4 @@
-// Program.cs
-// Compile (example): mcs Program.cs -out:declipping.exe
-// Run:               mono declipping.exe
-// Output:            declipping.dat
+
 
 using System;
 using System.Text;
@@ -43,7 +40,6 @@ public class matrix {
         }
         return r;
     }
-    // Extract submatrix of selected columns
     public matrix SubColumns(List<int> cols){
         var A=new matrix(size1, cols.Count);
         for(int k=0;k<cols.Count;k++){
@@ -63,7 +59,6 @@ public class QR {
         Q=A.copy();
         R=new matrix(m,m);
         for(int j=0;j<m;j++){
-            // v_j currently in Q[:,j]; remove projections on previous q_i
             for(int i=0;i<j;i++){
                 double rij=0;
                 for(int r=0;r<n;r++) rij += Q[r,i]*Q[r,j];
@@ -80,8 +75,6 @@ public class QR {
         }
     }
     public vector solve(vector b){
-        // Solve min ||A x - b|| via QR:
-        // y = Q^T b (length m), then R x = y
         int n=Q.size1, m=Q.size2;
         var y=new vector(m);
         for(int j=0;j<m;j++){
@@ -101,22 +94,15 @@ public class QR {
 
 public static class Declipping {
 
-    // Build D (N x N) per lecture notes:
-    // rows 0,1: forward 3rd diff [-1, 3, -3, 1] at columns i..i+3
-    // rows 2..N-3: centered 3rd derivative [-1/2, 1, 0, -1, 1/2] at columns i-2..i+2
-    // rows N-2,N-1: backward 3rd diff [-1, 3, -3, 1] at columns i-3..i
-    // Note: scale factors like 1/h^3 are omitted (they don't change argmin).
     public static matrix BuildThirdDerivativeD(int N){
         var D=new matrix(N,N);
         if(N<5) throw new Exception("N must be >= 5 to build 3rd-derivative stencil.");
-        // first two rows: forward difference at i=0 and i=1
         for(int i=0;i<2;i++){
             D[i, i+0] += -1.0;
             D[i, i+1] +=  3.0;
             D[i, i+2] += -3.0;
             D[i, i+3] +=  1.0;
         }
-        // middle rows: centered difference
         for(int i=2;i<=N-3;i++){
             int j=i-2;
             D[i, j+0] += -0.5;
@@ -125,7 +111,6 @@ public static class Declipping {
             D[i, j+3] += -1.0;
             D[i, j+4] +=  0.5;
         }
-        // last two rows: backward difference at i=N-2 and i=N-1
         for(int i=N-2;i<=N-1;i++){
             int j=i-3;
             D[i, j+0] += -1.0;
@@ -136,11 +121,8 @@ public static class Declipping {
         return D;
     }
 
-    // declip: solve z = argmin || D( y_tilde + M z ) ||, via A z ~= -b, A=D*M, b=D*y_tilde
-    // Returns the reconstructed full signal x.
     public static vector Declip(vector y, double yMin, double yMax, bool enforceConsistency=true){
         int N=y.size;
-        // 1) find clipped indices in increasing order
         const double eps=1e-12;
         var clipIdx=new List<int>();
         var clipSign=new List<int>(); // +1 for high, -1 for low
@@ -151,26 +133,20 @@ public static class Declipping {
         int n=clipIdx.Count;
         if(n==0) return y.copy(); // nothing to do
 
-        // 2) y_tilde: zeros at clipped positions
         var ytil=y.copy();
         for(int k=0;k<n;k++) ytil[clipIdx[k]] = 0.0;
 
-        // 3) D and b = D * y_tilde
         var D = BuildThirdDerivativeD(N);
         var b = D.Mul(ytil); // size N
 
-        // 4) A = D * M  == columns of D at clipped positions (N x n)
         var A = D.SubColumns(clipIdx);
 
-        // 5) Solve min ||A z + b||, i.e., A z ≈ -b using QR
-        //    Do QR on A (N x n), then solve for -b.
         var rhs = b.copy();
         for(int i=0;i<N;i++) rhs[i] = -rhs[i];
 
         var qr = new QR(A);
         var z  = qr.solve(rhs); // length n
 
-        // 6) Assemble x = y_tilde + M z  (copy y and replace clipped spots)
         var x = y.copy();
         for(int k=0;k<n;k++){
             x[clipIdx[k]] = z[k];
@@ -185,7 +161,6 @@ public static class Declipping {
 
 public class Program {
     public static void Main(){
-        // Synthetic test: sine wave clipped at ±0.8; write declipping.dat
         Console.WriteLine("Exam!\nTask 1: \nIn the first part we simply created the function declip that takes a clipped signal, the limits y_min and y_max as inputs and returns the reconstructed signal");
 
         Console.WriteLine("\nTask 2: ");
@@ -207,7 +182,6 @@ public class Program {
 
         var xDeclipped = Declipping.Declip(yClip, yMin, yMax, enforceConsistency:true);
 
-        // Write .dat for gnuplot: index  t  x_true  y_clipped  x_declipped  clipped_flag
         string outFile="declipping.dat";
         using(var sw=new StreamWriter(outFile,false,Encoding.UTF8)){
             sw.WriteLine("# i\t t\t x_true\t y_clipped\t x_declipped\t clipped_flag");
@@ -225,7 +199,6 @@ public class Program {
         Console.WriteLine("\nIn the second part we tested the implementation on the sine wave clipped at -.8 and .8. \nThe result can easily be seen in the file declipping.png\nThe true and declipped signal are indistiguishable in the top plot, which suggests that the declip method performs quite well. \nIn the bottom plot (of the errors) the differences are more apparent, although never very large (|error| always below 0.0002)");
 
         Console.WriteLine("\nTask 3:");
-        // ===== Complex test: chirp + AM + harmonics + transient burst =====
 {
     int N2 = 2000;
     double yMin2 = -0.7, yMax2 = 0.7;   // renamed to avoid shadowing
@@ -246,19 +219,15 @@ public class Program {
         double tau = 0.6*(double)i/(N2-1);   // renamed from `t` to avoid shadowing
         t2[i] = tau;
 
-        // Chirp: sin(2π [f0 τ + 0.5*df τ^2])
         double chirp = Math.Sin(2*Math.PI*(f0*tau + 0.5*df*tau*tau));
 
         // Harmonic
         double harmonic = 0.3 * Math.Sin(2*Math.PI*fH*tau);
 
-        // AM envelope (0.2..1.0)
         double env = 0.6 + 0.4 * Math.Cos(2*Math.PI*0.5*tau);
 
-        // Slow baseline wobble
         double baseline = 0.1 * Math.Cos(2*Math.PI*fL*tau);
 
-        // Localized burst (Gaussian window * high-freq sine)
         double gauss = Math.Exp(-0.5*Math.Pow((tau - burstCenter)/burstSigma, 2));
         double burst = 0.3 * gauss * Math.Sin(2*Math.PI*50.0*tau);
 
@@ -271,7 +240,6 @@ public class Program {
 
     var xDeclipped2 = Declipping.Declip(yClip2, yMin2, yMax2, enforceConsistency:true);
 
-    // Write .dat: i  t  x_true  y_clipped  x_declipped  clipped_flag
     string outFile2="declipping_complex.dat";
     using(var sw=new StreamWriter(outFile2,false,Encoding.UTF8)){
         sw.WriteLine("# i\t t\t x_true\t y_clipped\t x_declipped\t clipped_flag");
